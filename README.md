@@ -4,10 +4,10 @@
 
 1. Dar fork a este repositório
 2. Dar clone do repositório (o forked)
-3. Criar uma pasta com o vosso numero de aluno na pasta do respetivo projeto
+3. Criar uma pasta com o vosso nome na pasta do respetivo projeto
     ```
     ├── python/
-    │    └── <vosso numero de aluno>/
+    │    └── <vosso nome>/
     │            ├── main.py
     │            └── ...
     ├── modelacao-3d/
