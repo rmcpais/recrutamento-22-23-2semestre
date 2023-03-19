@@ -41,8 +41,11 @@ while (not w) and (not l) and (budget != 0):
     
     print()
 
+    if jogador.wChecker():
+        print("BlackJack!")
+        w = True
     #Hit Or Settle?
-    if jogador.sum() < 21:
+    elif jogador.sum() < 21:
         HitOrSettle = input("Hit(H) or Settle(S)? (H/S)")
 
         #Hit
@@ -62,12 +65,16 @@ while (not w) and (not l) and (budget != 0):
             print(SetofCards.newCard())
             #Adiciona-a ao conjunto do dealer
             dealer.addCard(int(SetofCards.ultimoValor()))
-    elif jogador.sum() == 21:
-        print("BlackJack!")
-        w = True
+    #Jogador passou do limite
     else:
         print("Bust!")
-        l = True
+
+    if dealer.sum() < 17:
+        #Nova carta do dealer
+        print(SetofCards.newCard())
+        #Adiciona-a ao conjunto do dealer
+        dealer.addCard(int(SetofCards.ultimoValor()))
+
 
     print("Os teus pontos: " + str(jogador.sum()))
     print("Os pontos do dealer: " + str(dealer.sum()))
