@@ -18,7 +18,7 @@ class card:
         return self.rank + ' of ' + self.suit
 
 #criar um baralho. 1o criar um vetor onde vao ser colocadas as cartas. as cartas irao vir de um conjunto ja ordenado
-class deck:
+class deck2:
     def __init__(self):
         self.deck = []
         for suit in suits:
@@ -153,7 +153,7 @@ def dealer_busts(player, dealer, chips):
     print("\nYou nailed it! \nPlayer wins!")
     chips.win_bet()
 
-def stand_off(player, dealer, chips): #nao precisamos de pôr 'chips' no argumento da funcao. em caso de empate, nenhuma ficha tem de ser paga a ninguem
+def stand_off(player, dealer, chips): 
     print("\nStand-off: player has the same total as the dealer")
     chips.equal_bet()
 
@@ -162,10 +162,10 @@ def stand_off(player, dealer, chips): #nao precisamos de pôr 'chips' no argumen
 #JOGO
 
 while True: #este while é para o programa inteiro
-    print('Welcome to the game of Blackjack!')
+    print('\n\nWelcome to the game of Blackjack!')
 
     #criar um baralho de cartas com disposicao aleatoria
-    deck = deck()
+    deck = deck2()
     deck.shuffle()
 
     #criar 'mao' inicial (2 cartas) do jogador e do dealer
