@@ -65,22 +65,25 @@ class chips: #para atualizar apostas
         self.bet = 0
 
     def lose_bet(self):
-        self.total -= self.bet
+        self.total == 0
     
     def win_bet(self, blackjack=False):
         if blackjack:
-            self.total += int(self.bet * 2.5)
+            self.total += int(self.bet) * 2.5
         else:
-            self.total += int(self.bet * 2)
+            self.total += int(self.bet) * 2
+    
+    def equal_bet(self):
+        self.total = int(self.bet)
 
 #pergunta ao utilizador qual vai ser o valor da aposta 
 def ask_bet(chips):
     while True:
-        chips.bet = int(input('\n How much do you want to bet? '))
+        chips.bet = input('\n How much do you want to bet? ')
         if str(chips.bet).isdigit() == False:
             print('\nError: please write a number between 2 and 500: ')
         else: 
-            if chips.bet < 2 or chips.bet > 500:
+            if int(chips.bet) < 2 or int(chips.bet) > 500:
                 print('\nError: your bet must be between 2eur and 500eur. Please try again')
             else:
                 break
@@ -97,29 +100,29 @@ def hit_vs_stand(deck, hand):
                               #ou seja, alterar o valor desta variavel dentro desta funcao nao alteraria em nada o valor fora da funcao
 
     while True:
-        question = input("\n Please choose if you want to hit ('h'), stand ('s') or exit the game ('e'): ")
+        question = input("\n\nPlease choose if you want to hit ('h'), stand ('s') or exit the game ('e'): ")
 
         if question == 'e':
-            print('You have exited the game. See you next time!')
+            print('\nYou have exited the game. See you next time!')
             exit() 
         if question == 'h':
             hit(deck, hand)
         elif question == 's':
-            print("Player stands, Dearler's turn.")
+            print("\nPlayer stands, Dearler's turn.")
             player_doing_stuff = False #utilizador deixa de jogar. é a vez do dealer
         else: 
-            print('Error: invalid command. Please try again')
+            print('\nError: invalid command. Please try again')
             continue
         break
 
 def hide_dealer(player, dealer):
     print("\n--> Dealer's Hand: ")
     print("    <face down>")
-    print("   ", dealer.cards[1], "\n") #printa o segundo elemento do vetor 'cards' da classe 'hand' do dealer
+    print("   ", dealer.cards[1], "\n\n") #printa o segundo elemento do vetor 'cards' da classe 'hand' do dealer
     print("--> Player's Hand: ")
     for card in player.cards: #printa cada carta do utilizador numa linha diferente
         print("   ", card)
-    print("--> Player's Value:", player.value)
+    print("\n--> Player's Value:", player.value)
 
     
 def show_cards(player, dealer): #mostra as cartas e os seus valores
@@ -135,25 +138,24 @@ def show_cards(player, dealer): #mostra as cartas e os seus valores
 
 #fins possiveis
 def player_wins(player, dealer, chips):
-    print("You nailed it! Player wins!")
+    print("\nYou nailed it! \nPlayer wins!")
     chips.win_bet()
 
 def player_busts(player, dealer, chips):
-    print("Better luck next time :') \n Dealer wins!")
+    print("\nBetter luck next time :') \nDealer wins!")
     chips.lose_bet()
 
 def dealer_wins(player, dealer, chips):
-    print("Better luck next time :') \n Dealer wins!")
+    print("\nBetter luck next time :') \nDealer wins!")
     chips.lose_bet()
 
 def dealer_busts(player, dealer, chips):
-    print("You nailed it! Player wins!")
+    print("\nYou nailed it! \nPlayer wins!")
     chips.win_bet()
 
-def stand_off(player, dealer): #nao precisamos de pôr 'chips' no argumento da funcao. em caso de empate, nenhuma ficha tem de ser paga a ninguem
-    print("Stand-off: player has the same total as the dealer")
-
-
+def stand_off(player, dealer, chips): #nao precisamos de pôr 'chips' no argumento da funcao. em caso de empate, nenhuma ficha tem de ser paga a ninguem
+    print("\nStand-off: player has the same total as the dealer")
+    chips.equal_bet()
 
 
 
@@ -208,15 +210,15 @@ while True: #este while é para o programa inteiro
             dealer_busts(player_hand, dealer_hand, player_chips)
         
         elif dealer_hand.value == player_hand.value:
-            stand_off(player_hand.value, dealer_hand.value)
+            stand_off(player_hand.value, dealer_hand.value, player_chips)
 
 
     print("\nYour balance: ", player_chips.total)
 
-    new_round = input("\n Do you want to start a new round? Please write 'y' or 'n': ")
+    new_round = input("\nDo you want to start a new round? Please write 'y' or 'n': ")
     if new_round == 'y':
         player_doing_stuff = True
         continue
     else:
-        print("\n See you next time :) ")
+        print("\nSee you next time :) ")
         break
