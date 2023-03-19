@@ -69,9 +69,11 @@ class chips: #para atualizar apostas
     def lose_bet(self):
         self.total -= self.bet
     
-    def win_bet(self):
-        self.total += self.bet
-
+    def win_bet(self, blackjack=False):
+        if blackjack:
+            self.total += int(self.bet * 2.5)
+        else:
+            self.total += int(self.bet * 2)
 
 #pergunta ao utilizador qual vai ser o valor da aposta 
 def ask_bet(bet):
@@ -117,7 +119,7 @@ def hide_dealer(player, dealer):
     for card in player.cards: #printa cada carta do utilizador numa linha diferente
         print(card)
     
-def show_cards(player, dealer):
+def show_cards(player, dealer): #mostra as cartas e os seus valores
     print("\n --> Dealer's Hand: ")
     for card in dealer.cards: 
         print(card)
@@ -127,6 +129,26 @@ def show_cards(player, dealer):
         print(card)
     print("\n --> Player's Value: ", player.value)
 
+
+#fins possiveis
+def player_wins(player, dealer, chips):
+    print("You nailed it! Player wins!")
+    chips.win_bet()
+
+def player_busts(player, dealer, chips):
+    print("Better luck next time :') \n Dealer wins!")
+    chips.lose_bet()
+
+def dealer_wins(player, dealer, chips):
+    print("Better luck next time :') \n Dealer wins!")
+    chips.lose_bet()
+
+def dealer_busts(player, dealer, chips):
+    print("You nailed it! Player wins!")
+    chips.win_bet()
+
+def stand_off(player, dealer): #nao precisamos de pôr 'chips' no argumento da funcao. em caso de empate, nenhuma ficha tem de ser paga a ninguem
+    print("Stand-off: player has the same total as the dealer")
 
 
     
