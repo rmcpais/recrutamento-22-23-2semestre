@@ -1,5 +1,6 @@
 import random
 from random import randrange
+from random import randint
 
 #Módulo uyilizado para gerar cartas e gerir as cartas em jogo
 class cards:
@@ -25,40 +26,37 @@ class cards:
     def newCard(self):
         name = False
         while not name:
-            counter = 0
             #Escolha de tipo de carta
-            self._type = random.choice(["Numbered", "Queen", "King", "Jack", "Ace"])
+            self._type = random.choice(["Numbered", "Queen", "Numbered", "King", "Numbered", "Jack", "Ace"])
 
+            #Associar valor respetivo
+            if self._type == "Numbered":
+                value = random.randint(2, 10)
+            if self._type == "Ace":
+                value = 11
+            if (self._type == "Queen") or (self._type == "King") or (self._type == "Jack"):
+                value = 10
 
-            while not name:
-                if self._type == "Numbered":
-                    value = randrange(1,10)
+            self._suit = random.choice(["hearts", "diamonds", "spades", "clubs"])
 
-                if self._type == "Ace":
-                    value = 11
-                else:
-                    value = 10
-
-                self._suit = random.choice(["hearts", "diamonds", "spades", "clubs"])
-
-                if str(str(self._type) + " of " + str(self._suit)) in self._elem or str(str(value) + " of " + str(self._suit)) in self._elem:
-                    name = False
-                else:
-                    name = True
+            if (str(str(self._type) + " of " + str(self._suit)) in self._elem) or (str(str(value) + " of " + str(self._suit)) in self._elem):
+                name = False
+            else:
+                name = True
 
         if self._type != "Numbered":  
-            self._elem.insert(-1, str(self._type) + " of " + str(self._suit))
+            self._elem.insert(0, str(self._type) + " of " + str(self._suit))
             return "★: " + str(self._type) + " of " + str(self._suit) + " - Value: " + str(value)
         else:
-            self._elem.insert(-1, str(str(value) + " of " + str(self._suit)))
+            self._elem.insert(0, str(str(value) + " of " + str(self._suit)))
             return "★: " + str(value) + " of " + str(self._suit) + " - Value: " + str(value) 
 
     def ultimoValor(self):
-        for i in range(1, 11):
-            if str(i) in self._elem[-1]:
-                self._value = i
-        if "Ace" in self._elem[-1]:
-            self._value = 11
+        ultValor = self._elem[0]
+        if "Ace" in ultValor:
+            value = 11
+        if ("Queen" in ultValor) or ("Jack" in ultValor) or ("King" in ultValor):
+            value = 10
         else:
-            self._value = 10
-        return int(self._value)
+            value = int(str(ultValor[0]))
+        return int(value)
