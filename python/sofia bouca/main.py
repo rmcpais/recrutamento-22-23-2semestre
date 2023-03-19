@@ -99,8 +99,11 @@ def hit_vs_stand(deck, hand):
                               #ou seja, alterar o valor desta variavel dentro desta funcao nao alteraria em nada o valor fora da funcao
 
     while True:
-        question = input('\n Please choose if you want to hit ("h") or stand ("s"): ')
+        question = input("\n Please choose if you want to hit ('h'), stand ('s') or exit the game ('e'): ")
 
+        if question == 'e':
+            print('You have exited the game. See you next time!')
+            exit() 
         if question == 'h':
             hit(deck, hand)
         elif question == 's':
