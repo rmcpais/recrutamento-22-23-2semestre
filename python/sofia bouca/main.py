@@ -156,17 +156,67 @@ def stand_off(player, dealer): #nao precisamos de pôr 'chips' no argumento da f
 
 #JOGO
 
-while True:
+while True: #este while é para o programa inteiro
     print('\n Welcome to the game of Blackjack!')
 
     #criar um baralho de cartas com disposicao aleatoria
     deck = deck()
     deck.shuffle()
 
-    #criar 'mao' do jogador e do dealer
-    player_hand = hand
+    #criar 'mao' inicial (2 cartas) do jogador e do dealer
+    player_hand = hand()
+    player_hand.add_card(deck.deal())
+    player_hand.add_card(deck.deal())
+
+    dealer_hand = hand()
+    dealer_hand.add_card(deck.deal())
+    dealer_hand.add_card(deck.deal())
+
+    #pedir ao jogador que faça a sua aposta
+    player_chips = chips()
+    ask_bet(player_chips)
+
+    #após o jogador e o dealer terem as suas 'maos' e o jogador ter feito a sua aposta, mostramos as cartas ao jogador, para ele poder tomar a sua proxima decisao
+    hide_dealer(player_hand, dealer_hand)
 
 
+    #enquanto o jogador estiver a interagir com o programa
+    while player_doing_stuff:
+        hit_vs_stand(deck, player_hand)
+        hide_dealer(player_hand, dealer_hand)
+
+        if player_hand.value > 21: #se o jogador decidir 'hit' multiplas vezes, pode 'rebentar'
+            player_busts(player_hand, dealer_hand, player_chips)
+            break
+
+    if player_hand.value <= 21:
+        while dealer_hand.value < 17: #"The dealer must continue to take cards until the total is 17 or more, at which point the dealer must stand"
+            hit(deck, dealer_hand)
+
+        show_cards(player_hand, dealer_hand) #mostrar as cartas, para vermos o outcome
+
+        if dealer_hand.value < player_hand.value:
+            player_wins(player_hand, dealer_hand, player_chips)
+
+        elif dealer_hand.value > player_hand.value:
+            dealer_wins(player_hand, dealer_hand, player_chips)
+        
+        elif dealer_hand.value > 21:
+            dealer_busts(player_hand, dealer_hand, player_chips)
+        
+        elif dealer_hand.value == player_hand.value:
+            stand_off(player_hand.value, dealer_hand.value)
+
+
+    print("\nYour balance: ", player_chips.total)
+
+    new_round = input("\n Do you want to start a new round? Please write 'y' or 'n': ")
+    if new_round == 'y':
+        player_doing_stuff = True
+        continue
+    else:
+        print("\n See you next time :) ")
+        break
         
 
 
