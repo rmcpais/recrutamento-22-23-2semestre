@@ -151,7 +151,21 @@ def stand_off(player, dealer): #nao precisamos de pôr 'chips' no argumento da f
     print("Stand-off: player has the same total as the dealer")
 
 
-    
+
+
+
+#JOGO
+
+while True:
+    print('\n Welcome to the game of Blackjack!')
+
+    #criar um baralho de cartas com disposicao aleatoria
+    deck = deck()
+    deck.shuffle()
+
+    #criar 'mao' do jogador e do dealer
+    player_hand = hand
+
 
         
 
