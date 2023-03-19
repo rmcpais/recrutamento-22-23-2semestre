@@ -1,5 +1,6 @@
 from cards import cards
 from pessoa import pessoa
+from money import money
 
 
 budget = input("Inserir valor a colocar em jogo: ")
@@ -14,6 +15,7 @@ l = False
 jogador = pessoa()
 dealer = pessoa()
 SetofCards = cards()
+bank = money()
 
 while (not w) and (not l) and (budget != 0):
 
@@ -27,9 +29,9 @@ while (not w) and (not l) and (budget != 0):
     print("Your cards:")
     while (i!=2):
         print(SetofCards.newCard())
-        jogador.addCard(int(SetofCards.ultimoValor()))
+        jogador.addCard(SetofCards.ultimoValor())
         i = i+1
-    print(jogador.seeCards())
+    print("Os teus pontos: " + str(jogador.sum()))
 
     print()
     print("Dealer's cards:")
@@ -37,7 +39,37 @@ while (not w) and (not l) and (budget != 0):
     dealer.addCard(int(SetofCards.ultimoValor()))
     print("★: ? of ? - Value: ?")
     
-    print(jogador.sum())
+    print()
 
-    hitOrSettle = input("Hit(H) or Settle(S)? (H/S)")
+    #Hit Or Settle?
+    if jogador.sum() < 21:
+        HitOrSettle = input("Hit(H) or Settle(S)? (H/S)")
+
+        #Hit
+        if HitOrSettle == "H":
+            #Nova carta para o jogador
+            print(SetofCards.newCard())
+
+            #Adição do valor da nova carta ao conjunto do jogador
+            jogador.addCard(int(SetofCards.ultimoValor()))
+
+            #Atualização dos pontos
+            print("Os teus pontos: " + str(jogador.sum()))
+        
+        #Settle
+        else:
+            #Mostra a carta do dealer
+            print(SetofCards.newCard())
+            #Adiciona-a ao conjunto do dealer
+            dealer.addCard(int(SetofCards.ultimoValor()))
+    elif jogador.sum() == 21:
+        print("BlackJack!")
+        w = True
+    else:
+        print("Bust!")
+        l = True
+
+    print("Os teus pontos: " + str(jogador.sum()))
+    print("Os pontos do dealer: " + str(dealer.sum()))
+
     
