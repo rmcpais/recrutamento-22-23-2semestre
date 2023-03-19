@@ -15,7 +15,7 @@ class card:
         self.rank = rank
 
     def __str__(self):
-        return self.rank + 'of' + self.suit
+        return self.rank + ' of ' + self.suit
 
 #criar um baralho. 1o criar um vetor onde vao ser colocadas as cartas. as cartas irao vir de um conjunto ja ordenado
 class deck:
@@ -78,10 +78,10 @@ def ask_bet(chips):
     while True:
         chips.bet = int(input('\n How much do you want to bet? '))
         if str(chips.bet).isdigit() == False:
-            print('Error: please write a number: ')
+            print('\nError: please write a number between 2 and 500: ')
         else: 
             if chips.bet < 2 or chips.bet > 500:
-                print('Error: your bet must be between 2eur-500eur')
+                print('\nError: your bet must be between 2eur and 500eur. Please try again')
             else:
                 break
 
@@ -113,22 +113,24 @@ def hit_vs_stand(deck, hand):
         break
 
 def hide_dealer(player, dealer):
-    print("\n --> Dealer's Hand: ")
-    print("<face down>")
-    print(dealer.cards[1]) #printa o segundo elemento do vetor 'cards' da classe 'hand' do dealer
-    print("\n --> Player's Hand: ")
+    print("\n--> Dealer's Hand: ")
+    print("    <face down>")
+    print("   ", dealer.cards[1], "\n") #printa o segundo elemento do vetor 'cards' da classe 'hand' do dealer
+    print("--> Player's Hand: ")
     for card in player.cards: #printa cada carta do utilizador numa linha diferente
-        print(card)
+        print("   ", card)
+    print("--> Player's Value:", player.value)
+
     
 def show_cards(player, dealer): #mostra as cartas e os seus valores
     print("\n --> Dealer's Hand: ")
     for card in dealer.cards: 
         print(card)
-    print("\n --> Dealer's Value: ", dealer.value)
+    print("--> Dealer's Value: ", dealer.value)
     print("\n --> Player's Hand: ")
     for card in player.cards: 
         print(card)
-    print("\n --> Player's Value: ", player.value)
+    print("--> Player's Value:", player.value)
 
 
 #fins possiveis
