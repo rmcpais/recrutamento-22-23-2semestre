@@ -27,6 +27,51 @@ class deck:
 
     def __str__(self): #apesar de nao querer printar no final o conteudo do baralho inteiro, é boa pratica fazer o '__str__' para debugging
         comb_deck = ''
-        for card in self.deck: #vamos iterar por cada 'card' da lista 'deck'
-            comb_deck += ' \n ' + card.__str__()
+        for card in self.deck: #vamos iterar por cada 'card' da lista 'self.deck'
+            comb_deck += ' \n ' + card.__str__() #representar cada carta atraves de strings
         return 'Deck: ' + comb_deck
+
+
+#baralhar as cartas
+def shuffle(self):
+    random.shuffle(self.deck)
+
+#distribuir as cartas
+def deal(self):
+    one_card = self.deck.pop()
+    return one_card
+
+
+class hand:
+    def __init__(self):
+        self.cards = []
+        self.value = []
+        self.aces = 0 #para poder determinar se na jogada o ás deve valer 1 ou 11 (por default vem com 11)
+
+    def add_card(self, card):
+        self.cards.append(card)
+        self.value += values[card.rank]
+
+        if card.rank == 'Ace':
+            self.aces += 1
+    
+    def change_value_ace(self): #ajust
+        if self.value > 21 and self.aces:
+            self.value -= 10
+            self.aces -= 1
+
+class bet: #para atualizar apostas
+    def __init__(self):
+        self.total = 0
+        self.bet = 0
+
+    def lose_bet(self):
+        self.total -= self.bet
+    
+    def win_bet(self):
+        self.total += self.bet
+
+
+
+
+
