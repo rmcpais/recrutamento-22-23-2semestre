@@ -25,28 +25,26 @@ class deck:
             for rank in ranks:
                 self.deck.append(card(suit, rank))
 
-
     def __str__(self): #apesar de nao querer printar no final o conteudo do baralho inteiro, é boa pratica fazer o '__str__' para debugging
         comb_deck = ''
         for card in self.deck: #vamos iterar por cada 'card' da lista 'self.deck'
             comb_deck += ' \n ' + card.__str__() #representar cada carta atraves de strings
         return 'Deck: ' + comb_deck
 
+    #baralhar as cartas
+    def shuffle(self):
+        random.shuffle(self.deck)
 
-#baralhar as cartas
-def shuffle(self):
-    random.shuffle(self.deck)
-
-#distribuir as cartas
-def deal(self):
-    one_card = self.deck.pop()
-    return one_card
+    #distribuir as cartas
+    def deal(self):
+        one_card = self.deck.pop()
+        return one_card
 
 
 class hand:
     def __init__(self):
         self.cards = []
-        self.value = []
+        self.value = 0
         self.aces = 0 #para poder determinar se na jogada o ás deve valer 1 ou 11 (por default vem com 11)
 
     def add_card(self, card):
@@ -76,10 +74,10 @@ class chips: #para atualizar apostas
             self.total += int(self.bet * 2)
 
 #pergunta ao utilizador qual vai ser o valor da aposta 
-def ask_bet(bet):
+def ask_bet(chips):
     while True:
-        chips.bet = input('How much do you want to bet? ')
-        if chips.bet != int:
+        chips.bet = int(input('\n How much do you want to bet? '))
+        if str(chips.bet).isdigit() == False:
             print('Error: please write a number: ')
         else: 
             if chips.bet < 2 or chips.bet > 500:
@@ -160,7 +158,7 @@ def stand_off(player, dealer): #nao precisamos de pôr 'chips' no argumento da f
 #JOGO
 
 while True: #este while é para o programa inteiro
-    print('\n Welcome to the game of Blackjack!')
+    print('Welcome to the game of Blackjack!')
 
     #criar um baralho de cartas com disposicao aleatoria
     deck = deck()
@@ -220,15 +218,3 @@ while True: #este while é para o programa inteiro
     else:
         print("\n See you next time :) ")
         break
-        
-
-
-
-
-
-        
-
-
-
-
-
