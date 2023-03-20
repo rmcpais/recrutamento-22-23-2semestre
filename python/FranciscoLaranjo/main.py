@@ -54,8 +54,6 @@ class Sistema:
         return finalStrPreview
 
 
-
-
     def print_mesa(self,revealLastDealerCard=True):
         if revealLastDealerCard == False:
             print("DEALER:")
@@ -227,7 +225,6 @@ class Player:
         self.hand.append(carta)
         self.sum = self.getSumOfHand(self.hand)
 
-
     #Funcao auxiliar
     def playerHand(self):
         return self.hand
@@ -236,6 +233,7 @@ class Player:
     #Funcao auxiliar
     def playerSum(self):
         return self.sum
+
 
     #Funcao auxiliar
     def hasPlayerBlackjack(self):
@@ -257,6 +255,7 @@ class Player:
             #return [12,21]
         
         #if len(hand) == 2 and hand[0][1:] == hand[1][1:] == 'A': # caso especifico de mao ter 2 ases
+            #time.sleep(100)
             #return [2,22]
 
         for card in hand:
@@ -265,7 +264,7 @@ class Player:
                 sum = [sum[0] + 10, sum[1] + 10]
             elif card[1:] == 'A':
                 if sum[1] + 11 > 21:
-                    sum = [sum[0] + 1, sum[1] + 1]
+                    sum = [sum[0] + 1, sum[1] + 1] # se houver 2 ases, dá 1/12
                 else:
                     sum = [sum[0] + 1, sum[1] + 11]
 
@@ -278,9 +277,6 @@ class Player:
 
         return sum
         
-
-
-
 sys = Sistema()
 sys.comecar_jogo()
 
