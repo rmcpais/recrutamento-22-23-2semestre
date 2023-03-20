@@ -1,6 +1,11 @@
 import random
 import time
 
+# SE O JOGADOR DER ALL IN O JOGO BREKA E FICA SEM DINHEIRO 
+# # atualizar jogo e fica com 0 de balance
+#-....................
+# melhorar eficiencia 
+
 class Sistema:
     def __init__(self):
         self.baralho = ["C2","C3","C4","C5","C6","C7","C8","C9","C10","CJ","CQ","CK","CA",
@@ -55,6 +60,7 @@ class Sistema:
         if revealLastDealerCard == False:
             print("DEALER:")
             print(self.stringCardsPreview(self.dealer.playerHand()[:-1])) #  + " ? "
+            # APRIMORAR A FUNCOA PARA METER CARTA ESCONDIDA COM PONTOS DE INTERROGACAO OU CARTA COM NAIPE E NUM??
 
             if str(self.dealer.playerHand()[0])[1:] == "A":
                 print("1 / 11")
@@ -79,6 +85,7 @@ class Sistema:
             print(str(self.player.playerSum()[0]) + "/" + str(self.player.playerSum()[1]))
         else: 
             print(self.player.sum[0])
+        print("SALDO: " + str(self.player.playerBalance()) + " $")
         print("--------------------------------------------------------------------------------------------\n")
 
     def retirar_carta_baralho(self):
@@ -92,18 +99,22 @@ class Sistema:
         else: return False
 
 
-    def push(self): # empate, player e dealer com mao abaixo de 22
+    def push(self, player, playerbet): # empate, player e dealer com mao abaixo de 22
         print("PUSH")
+        player.darBalance(float(playerbet))
 
-    def player_win(self, blackjack=False):
+    def player_win(self, player, playerbet, blackjack=False):
         if blackjack:
-            print("| PLAYER GANHOU BLACKJACK |")
+            print("| PLAYER GANHOU COM BLACKJACK |")
+            player.darBalance(float(playerbet) * 2.5)
         else:
             print("| PLAYER GANHOU |")
+            player.darBalance(float(playerbet) * 2)
 
 
-    def player_loss(self):
+    def player_loss(self, player, playerbet, ):
         print("| PLAYER LOSS |")
+
 
     def resetCards(self):
         self.baralho = ["C2","C3","C4","C5","C6","C7","C8","C9","C10","CJ","CQ","CK","CA",
@@ -113,11 +124,32 @@ class Sistema:
 
         self.player.hand, self.dealer.hand = [],[]
 
+    def isfloat(self, num):
+        try:
+            float(num)
+            return True
+        except ValueError:
+            return False
+
 
     def comecar_jogo(self):
         keepGoing = True
+        
+        x = input("Qual o teu balance inicial? ")
+        while not self.isfloat(x):
+            x = input("Insere o teu balance inicial $: ")
+        self.player.darBalance(x)
 
         while keepGoing == True:
+            if self.player.balance == 0:
+                print("Esgotou o balance")
+                keepGoing = False
+                break
+            bet = input("Quanto queres apostar? ")
+            while not self.isfloat(bet) or (self.player.playerBalance() - float(bet) < 0):
+                bet = input("Quanto queres apostar? ")
+            self.player.retirarBalance(bet)
+
             self.resetCards()
 
             self.player.darCarta(self.retirar_carta_baralho())
@@ -127,6 +159,9 @@ class Sistema:
 
             self.print_mesa(revealLastDealerCard=False)
             x = input("DECISAO: ")
+            while x != "hit" and x != "stand":
+                x = input("DECISAO: ")
+            
             if x == "hit":
                 while x != "stand" and self.player.sum[1] < 22:
                     # dar carta
@@ -134,7 +169,7 @@ class Sistema:
                     self.print_mesa(revealLastDealerCard=False)
 
                     if self.player.isPlayerBusted():
-                        self.player_loss()
+                        self.player_loss(self.player, bet)
                         break
                     elif self.player.sum[1] == self.player.sum[0] == 21 :
                         x = "stand"
@@ -151,19 +186,18 @@ class Sistema:
                     self.print_mesa()
 
                 if self.dealer.isPlayerBusted():
-                    self.player_win(blackjack=self.player.hasPlayerBlackjack())
+                    self.player_win(self.player, bet,blackjack=self.player.hasPlayerBlackjack())
                 elif self.dealer.sum[1] > self.player.sum[1]:
-                    self.player_loss()
+                    self.player_loss(self.player, bet)
                 elif self.dealer.sum[1] == self.player.sum[1]:
-                    self.push()
+                    self.push(self.player, bet)
                 else:
                     raise ValueError("Nao foi possivel concluir o estado do jogo")
-                
+            
             # depois de jogo ter acabado
-            keepGoing = False
-
-                
-                
+            print("SALDO: " + str(self.player.playerBalance()) + " $")
+            keepGoing = input("Queres continuar? s/n\n") == 's'
+            
         print("JOGO ACABOU")
 
             
@@ -173,15 +207,28 @@ class Player:
     def __init__(self):
         self.hand = []
         self.sum = []
+        self.balance = 0
+
+
+    def retirarBalance(self, num):
+        self.balance -= float(num)
+
+    def darBalance(self, num):
+        self.balance += float(num)
+
+    def playerBalance(self):
+        return float(self.balance)
 
     def darCarta(self, carta):
         self.hand.append(carta)
         self.sum = self.getSumOfHand(self.hand)
-    
+
+
     #Funcao auxiliar
     def playerHand(self):
         return self.hand
-    
+
+
     #Funcao auxiliar
     def playerSum(self):
         return self.sum
