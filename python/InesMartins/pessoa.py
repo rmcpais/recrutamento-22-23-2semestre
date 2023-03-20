@@ -11,9 +11,6 @@ class pessoa:
     def seeCards(self):
         return self._elem
 
-    #teste de natural
-    def naturalTest(self):
-        return len(self._elem)==2 and ("Ace" and "10" in self._elem)
     
     #soma do valor
     def sum(self):
@@ -22,6 +19,7 @@ class pessoa:
             sum = sum + int(elem)
         return sum
 
+    def clear(self):
+        self._elem = []
+        return self._elem
     
-    def wChecker(self):
-        return self._elem.sum() == 21

@@ -53,10 +53,19 @@ class cards:
 
     def ultimoValor(self):
         ultValor = self._elem[0]
-        if "Ace" in ultValor:
+        if "Ace" == str(ultValor[0:3]):
             value = 11
-        if ("Queen" in ultValor) or ("Jack" in ultValor) or ("King" in ultValor):
+        elif ("Queen" == str(ultValor[0:5])) or ("Jack" == str(ultValor[0:4])) or ("King" == str(ultValor[0:4])):
             value = 10
         else:
-            value = int(str(ultValor[0]))
+            s = "".join(x for x in str(ultValor[0]) if x.isdigit())
+            value = int(str(s))
         return int(value)
+    
+
+    def naturalTest(self):
+        return len(self._elem)==2 and ("Ace" and "10" in self._elem)
+    
+    def clear(self):
+        self._elem = []
+        return self._elem
