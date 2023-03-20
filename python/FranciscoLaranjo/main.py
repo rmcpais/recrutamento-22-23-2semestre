@@ -146,7 +146,7 @@ class Sistema:
                 keepGoing = False
                 break
             bet = input("Quanto queres apostar? ")
-            while not self.isfloat(bet) or (self.player.playerBalance() - float(bet) < 0):
+            while not self.isfloat(bet) or (round(self.player.playerBalance() - float(bet),2) < 0):
                 bet = input("Quanto queres apostar? ")
             self.player.retirarBalance(bet)
 
@@ -180,7 +180,7 @@ class Sistema:
             if x == "stand":
                 self.print_mesa() # virar carta do dealer
 
-                while self.dealer.sum[1] < 17 or (self.dealer.sum[1] < self.player.sum[1]) and not self.dealer.isPlayerBusted():
+                while self.dealer.sum[1] < 17 and not self.dealer.isPlayerBusted(): # or (self.dealer.sum[1] < self.player.sum[1])
                     time.sleep(2)
                     self.dealer.darCarta(self.retirar_carta_baralho())
                     self.print_mesa()
@@ -191,6 +191,10 @@ class Sistema:
                     self.player_loss(self.player, bet)
                 elif self.dealer.sum[1] == self.player.sum[1]:
                     self.push(self.player, bet)
+                elif self.dealer.sum[1] > self.player.sum[1]:
+                    self.player_loss(self.player, bet)
+                elif self.dealer.sum[1] < self.player.sum[1]:
+                    self.player_win(self.player, bet)
                 else:
                     raise ValueError("Nao foi possivel concluir o estado do jogo")
             
@@ -211,13 +215,13 @@ class Player:
 
 
     def retirarBalance(self, num):
-        self.balance -= float(num)
+        self.balance -= round(float(num),2)
 
     def darBalance(self, num):
-        self.balance += float(num)
+        self.balance += round(float(num),2)
 
     def playerBalance(self):
-        return float(self.balance)
+        return round(float(self.balance),2)
 
     def darCarta(self, carta):
         self.hand.append(carta)
@@ -235,28 +239,33 @@ class Player:
 
     #Funcao auxiliar
     def hasPlayerBlackjack(self):
-        return self.sum[1] == 21 and len(self.hand) == 2
+        try:
+            return self.sum[1] == 21 and len(self.hand) == 2
+        except:
+            return False
+        
 
     #Funcao auxiliar
     def isPlayerBusted(self):
-        return self.sum[1] > 21
+        return self.sum[0] > 21
     
     # Funcao auxiliar    
     def getSumOfHand(self, hand):
         sum = [0,0]
+
+        #if self.hasPlayerBlackjack():
+            #return [12,21]
         
-        if len(hand) == 2 and hand[0][1:] == hand[1][1:] == 'A': # caso especifico de mao ter 2 ases
-            return [2,22]
+        #if len(hand) == 2 and hand[0][1:] == hand[1][1:] == 'A': # caso especifico de mao ter 2 ases
+            #return [2,22]
 
         for card in hand:
             if card[1:] in ['Q','J','K']:
                 #sum = list(map(lambda x: x + 10, sum))
                 sum = [sum[0] + 10, sum[1] + 10]
             elif card[1:] == 'A':
-                sum = [sum[0] + 1, sum[1] + 11]
                 if sum[1] + 11 > 21:
-                    if sum[1] + 1 > 21:
-                        sum = [sum[0] + 1, sum[1] + 1]
+                    sum = [sum[0] + 1, sum[1] + 1]
                 else:
                     sum = [sum[0] + 1, sum[1] + 11]
 
@@ -275,3 +284,5 @@ class Player:
 sys = Sistema()
 sys.comecar_jogo()
 
+# MTER AO LADO DO SALDO A BET
+# CORRIGIR FLOAT O SALDO DEU 0.01000000000000000000000009
