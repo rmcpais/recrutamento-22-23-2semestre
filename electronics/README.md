@@ -19,7 +19,7 @@ to us. You must submit the code and the circuit schematic before the final due
 date.
 
 The relevant dates are:
-- Topic confirmation: **Tuesday, 21nd of March**
+- Topic confirmation: **Wednesday, 22nd of March**
 - Project submission: **Tuesday, 28th of March** 
 
 ## Useful Resources
