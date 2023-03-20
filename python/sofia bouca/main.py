@@ -54,7 +54,7 @@ class hand:
         if card.rank == 'Ace':
             self.aces += 1
     
-    def change_value_ace(self): #ajust
+    def change_value_ace(self): #adjust
         if self.value > 21 and self.aces:
             self.value -= 10
             self.aces -= 1
@@ -65,13 +65,13 @@ class chips: #para atualizar apostas
         self.bet = 0
 
     def lose_bet(self):
-        self.total == 0
+        self.total -= int(self.bet)
     
-    def win_bet(self, blackjack=False):
-        if blackjack:
-            self.total += int(self.bet) * 2.5
-        else:
-            self.total += int(self.bet) * 2
+    def win_bet(self):
+        self.total += int(self.bet) * 2
+    
+    def win_blackjack(self):
+        self.total += int(self.bet) * 2.5
     
     def equal_bet(self):
         self.total = int(self.bet)
@@ -128,15 +128,19 @@ def hide_dealer(player, dealer):
 def show_cards(player, dealer): #mostra as cartas e os seus valores
     print("\n --> Dealer's Hand: ")
     for card in dealer.cards: 
-        print(card)
-    print("--> Dealer's Value: ", dealer.value)
-    print("\n --> Player's Hand: ")
+        print("   ", card)
+    print("\n--> Dealer's Value: ", dealer.value, "\n\n")
+    print("--> Player's Hand: ")
     for card in player.cards: 
-        print(card)
-    print("--> Player's Value:", player.value)
+        print("   ", card)
+    print("\n--> Player's Value:", player.value)
 
 
 #fins possiveis
+def player_blackjack(player, dealer, chips):
+    print("\nBlackjack! You nailed it! \nPlayer wins!")
+    chips.win_blackjack()
+
 def player_wins(player, dealer, chips):
     print("\nYou nailed it! \nPlayer wins!")
     chips.win_bet()
@@ -191,14 +195,20 @@ while True: #este while é para o programa inteiro
         hide_dealer(player_hand, dealer_hand)
 
         if player_hand.value > 21: #se o jogador decidir 'hit' multiplas vezes, pode 'rebentar'
+            show_cards(player_hand, dealer_hand) #mostrar as cartas, para vermos o outcome
             player_busts(player_hand, dealer_hand, player_chips)
             break
+        
+        if player_hand.value == 21:
+            show_cards(player_hand, dealer_hand) #mostrar as cartas, para vermos o outcome
+            player_blackjack(player_hand, dealer_hand, player_chips)
+            break
 
-    if player_hand.value <= 21:
+    if player_hand.value < 21:
         while dealer_hand.value < 17: #"The dealer must continue to take cards until the total is 17 or more, at which point the dealer must stand"
             hit(deck, dealer_hand)
 
-        show_cards(player_hand, dealer_hand) #mostrar as cartas, para vermos o outcome
+        show_cards(player_hand, dealer_hand) 
 
         if dealer_hand.value < player_hand.value:
             player_wins(player_hand, dealer_hand, player_chips)
@@ -213,7 +223,7 @@ while True: #este while é para o programa inteiro
             stand_off(player_hand.value, dealer_hand.value, player_chips)
 
 
-    print("\nYour balance: ", player_chips.total)
+    print("\nYour balance: ", player_chips.total) #NOTA: balance, neste sentido, significa a variaçao do dinheiro na conta doZ
 
     new_round = input("\nDo you want to start a new round? Please write 'y' or 'n': ")
     if new_round == 'y':
