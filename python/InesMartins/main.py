@@ -1,12 +1,13 @@
 from cards import cards
 from pessoa import pessoa
-from money import money
 
+#Pedido de dinheiro a colocar em jogo
 budget = input("Inserir valor a colocar em jogo: ")
 
+#Ronda inicial
 round = 1
 
-#Situação inicial, sem vitórias (w), ou perdas(l).
+#Situação inicial
 keepPlaying = True
 
 #Inicialização dos módulos
@@ -14,25 +15,36 @@ jogador = pessoa()
 dealer = pessoa()
 SetofCards = cards()
 
+#Início do jogo
 while (keepPlaying) and (budget != 0):
 
-    #Nova ronda
+    #Pedido de aposta
     bet = input("inserir valor de aposta: ")
+
+    #Verificação que aposta tem valor inferior ao dinheiro em jogo
     while int(bet) > int(budget):
         print("Impossível! A aposta deve ser menor que o dinheiro em jogo.")
         bet = input("inserir valor de aposta: ")
 
-
+    #Nova ronda:
     print("-------------------------------------")
     print("Round " + str(round))
     print( )
 
-    i= 0
+
+    #Cartas do jogador
     print("Your cards:")
+    i= 0
+    #While loop para o processo se repetir uma vez
     while (i!=2):
+        #Apresentação da carta
         print(SetofCards.newCard())
+
+        #Adição do valor da carta ao histórico do jogador
         jogador.addCard(SetofCards.ultimoValor())
+
         i = i+1
+    #Apresentação dos pontos:
     print("Os teus pontos: " + str(jogador.sum()))
 
     print()
@@ -46,17 +58,21 @@ while (keepPlaying) and (budget != 0):
     
     print()
 
+    #Verificar se jogador tem Blackjack
     if jogador.sum() == 21:
         print("BlackJack!")
 
+    #Verificar se jogador tem blackjack natural
     if SetofCards.naturalTest():
         print("Natural!")
+
         #Adicionar lucro do natural
-        budget = budget + (2.5)*(bet)
+        budget = int(budget) + (2.5)*(int(bet))
         print("Your money: " + str(budget))
 
     #Hit Or Settle?
     if jogador.sum() < 21:
+        #Variável utilizada para repetir pergunta até jogador escolher settle
         settle = False
         while not settle:
             HitOrSettle = input("Hit(H) or Settle(S)? (H/S)")
@@ -100,13 +116,15 @@ while (keepPlaying) and (budget != 0):
         #Adiciona-a ao conjunto do dealer
         dealer.addCard(int(SetofCards.ultimoValor()))
 
+    #Apresentação dos pontos
     print()
     print("Os teus pontos: " + str(jogador.sum()))
     print("Os pontos do dealer: " + str(dealer.sum()))
 
+    #if statements para todos os possíveis resultados
+    #Verificar se após HitorSettle o jogador tem blackjack
     if jogador.sum() == 21:
         print("BlackJack!")
-        w = True
 
         #Adição do dinheiro
         budget = int(budget) + (2.5)*(int(bet))
@@ -114,7 +132,7 @@ while (keepPlaying) and (budget != 0):
         #Atualizar valor do dinheiro
         print("Your money:" + str(budget))
 
-
+    #Verificar se o dealer tem blackjack
     elif dealer.sum() == 21:
         print()
         #Dealer ganha com blackjack
@@ -123,6 +141,8 @@ while (keepPlaying) and (budget != 0):
         #Atualização do dinheiro
         budget = int(budget) - int(bet)
         print("O teu dinheiro: " + str(budget))
+
+    #Nenhum tem blackjack:
     else:
         #Comparação da proximidade dos pontos a 21
         JogPontos = abs(21 - jogador.sum())
@@ -141,9 +161,14 @@ while (keepPlaying) and (budget != 0):
             print()
             print("Your Money:" + str(budget))
 
+    #Fim da ronda
     print("End of round " + str(round) + "!")
-    round = 2
+    round = round + 1
+
+    #Continuar ou não a jogar
     question = input("Continuar a jogar? (S/N)")
+
+    #Sim
     if question == "S":
         keepPlaying = True
 
@@ -151,16 +176,18 @@ while (keepPlaying) and (budget != 0):
         jogador.clear()
         dealer.clear()
         SetofCards.clear()
-    else:
-        keepPlaying == False
-
-    
-
+    #Não
+    elif question == "N":
+        keepPlaying = False
+        
+print()
 if (budget <= 0):
     print("Acabou o dinheiro. Não podes continuar a jogar.")
 
 if not keepPlaying:
     print("Obrigada por jogar!")
+
+print("Dinheiro final: " + str(budget))
 
 
     
