@@ -1,11 +1,6 @@
 import random
 import time
 
-# SE O JOGADOR DER ALL IN O JOGO BREKA E FICA SEM DINHEIRO 
-# # atualizar jogo e fica com 0 de balance
-#-....................
-# melhorar eficiencia 
-
 class Sistema:
     def __init__(self):
         self.baralho = ["C2","C3","C4","C5","C6","C7","C8","C9","C10","CJ","CQ","CK","CA",
@@ -53,11 +48,10 @@ class Sistema:
         return finalStrPreview
 
 
-    def print_mesa(self,revealLastDealerCard=True):
+    def print_mesa(self, playerBet, revealLastDealerCard=True):
         if revealLastDealerCard == False:
             print("DEALER:")
             print(self.stringCardsPreview(self.dealer.playerHand()[:-1])) #  + " ? "
-            # APRIMORAR A FUNCOA PARA METER CARTA ESCONDIDA COM PONTOS DE INTERROGACAO OU CARTA COM NAIPE E NUM??
 
             if str(self.dealer.playerHand()[0])[1:] == "A":
                 print("1 / 11")
@@ -82,7 +76,7 @@ class Sistema:
             print(str(self.player.playerSum()[0]) + "/" + str(self.player.playerSum()[1]))
         else: 
             print(self.player.sum[0])
-        print("SALDO: " + str(self.player.playerBalance()) + " $")
+        print("SALDO: " + str(self.player.playerBalance()) + " $" + "    BET: " + str(playerBet) + " $")
         print("--------------------------------------------------------------------------------------------\n")
 
     def retirar_carta_baralho(self):
@@ -128,11 +122,26 @@ class Sistema:
         except ValueError:
             return False
 
+    def breakAllIn(self, player):
+        # O propósito desta função serve apenas para roubar o jogador
+        # Finge que o programa deu erro e deixa o saldo a 1
+        
+        escolha = random.choice([True,False])
+        if escolha:
+            print("processando aposta...")
+            time.sleep(4)
+            print("ERRO APOSTA INVÁLIDA")
+            print("IMPOSSIVEL PROCESSAR PEDIDO")
+            time.sleep(5)
+            player.retirarBalance(player.playerBalance())
+            player.darBalance(1)
+    
 
     def comecar_jogo(self):
         keepGoing = True
         
         x = input("Qual o teu balance inicial? ")
+
         while not self.isfloat(x):
             x = input("Insere o teu balance inicial $: ")
         self.player.darBalance(x)
@@ -142,11 +151,18 @@ class Sistema:
                 print("Esgotou o balance")
                 keepGoing = False
                 break
-            bet = input("Quanto queres apostar? ")
-            while not self.isfloat(bet) or (round(self.player.playerBalance() - float(bet),2) < 0):
-                bet = input("Quanto queres apostar? ")
-            self.player.retirarBalance(bet)
+            bet = ""
+            
 
+            while (not self.isfloat(bet) or (round(self.player.playerBalance() - float(bet),2) < 0)):
+                bet = input("Quanto queres apostar? ")
+                if float(bet) == self.player.playerBalance():
+                    self.breakAllIn(self.player)
+                    bet = 1
+                    break
+            
+            self.player.retirarBalance(bet)
+                        	
             self.resetCards()
 
             self.player.darCarta(self.retirar_carta_baralho())
@@ -154,7 +170,7 @@ class Sistema:
             self.dealer.darCarta(self.retirar_carta_baralho())
             self.dealer.darCarta(self.retirar_carta_baralho())
 
-            self.print_mesa(revealLastDealerCard=False)
+            self.print_mesa(bet, revealLastDealerCard=False)
             x = input("DECISAO: ")
             while x != "hit" and x != "stand":
                 x = input("DECISAO: ")
@@ -163,7 +179,7 @@ class Sistema:
                 while x != "stand" and self.player.sum[1] < 22:
                     # dar carta
                     self.player.darCarta(self.retirar_carta_baralho())
-                    self.print_mesa(revealLastDealerCard=False)
+                    self.print_mesa(bet, revealLastDealerCard=False)
 
                     if self.player.isPlayerBusted():
                         self.player_loss(self.player, bet)
@@ -175,12 +191,12 @@ class Sistema:
                 else:
                     x = "stand"
             if x == "stand":
-                self.print_mesa() # virar carta do dealer
+                self.print_mesa(bet) # virar carta do dealer
 
-                while self.dealer.sum[1] < 17 and not self.dealer.isPlayerBusted(): # or (self.dealer.sum[1] < self.player.sum[1])
+                while self.dealer.sum[1] < 17 and not self.dealer.isPlayerBusted():
                     time.sleep(2)
                     self.dealer.darCarta(self.retirar_carta_baralho())
-                    self.print_mesa()
+                    self.print_mesa(bet)
 
                 if self.dealer.isPlayerBusted():
                     self.player_win(self.player, bet,blackjack=self.player.hasPlayerBlackjack())
@@ -209,7 +225,6 @@ class Player:
         self.hand = []
         self.sum = []
         self.balance = 0
-
 
     def retirarBalance(self, num):
         self.balance -= round(float(num),2)
@@ -263,7 +278,7 @@ class Player:
                 sum = [sum[0] + 10, sum[1] + 10]
             elif card[1:] == 'A':
                 if sum[1] + 11 > 21:
-                    sum = [sum[0] + 1, sum[1] + 1] # se houver 2 ases, dá 1/12
+                    sum = [sum[0] + 1, sum[1] + 1] # se houver 2 ases, dá 2/12
                 else:
                     sum = [sum[0] + 1, sum[1] + 11]
 
