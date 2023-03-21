@@ -278,6 +278,3 @@ class Player:
         
 sys = Sistema()
 sys.comecar_jogo()
-
-# MTER AO LADO DO SALDO A BET
-# FAZER CHEAT CODE BAIXO CIMA QUADRADO BOLA E TEM BALANCE INFINITO
