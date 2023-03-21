@@ -15,7 +15,6 @@ class Sistema:
         self.player = Player()
         self.dealer = Player()
 
-
         self.mesa = [self.player.hand, self.dealer.hand]
 
     def getCardStrPreview(self,cardCode):
@@ -281,3 +280,4 @@ sys = Sistema()
 sys.comecar_jogo()
 
 # MTER AO LADO DO SALDO A BET
+# FAZER CHEAT CODE BAIXO CIMA QUADRADO BOLA E TEM BALANCE INFINITO
