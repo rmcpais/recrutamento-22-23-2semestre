@@ -52,7 +52,7 @@ Dentro desta pasta, queria ver a versão final da aplicação, aquela que result
 Assim, é possível testar o teu código sem necessitar de compilar o teu projeto localmente. **Atenção:** o resultado do `flutter build` vai dar à pasta `build`, por isso, move os ficheiros que queres entregar dessa pasta para a `final` por favor!
 
 > Atenção numa particularidade relativamente à entrega, é melhor criares a pasta com os teus `PrimeiroÚltimo` nomes e depois lã dentro fazes `flutter create <nome do projeto>`. 
-> Não faças `flutter create .`, dado que a pasta não tem a convenção indicada pela equipa de desenvolvimento do Flutter.
+> Não faças `flutter create .`, dado que a pasta não tem a convenção indicada pela equipa de desenvolvimento do Flutter e, também, teria mais piada se deres nome próprio à tua app, não é verdade?
 
 ### Palavras finais
 Não precisas de te preocupar mais, a informação para o projeto em si já foi dita!
@@ -70,3 +70,8 @@ Em segundo lugar, tens a seguinte lista links que penso que possam ajudar caso q
 - [Documentação do flutter](https://docs.flutter.dev/) - apesar de normalmente não se ver a documentação, eu recomendo porque tens, por norma, um exemplo iterativo associado para poderes testar o widget que estiveres a ver. 
 Recomendo vivamente mesmo!
 - [Flutter favorite packages](https://pub.dev/packages?q=is%3Aflutter-favorite) - packages recomendados.
+
+De resto é isto! 
+Boa sorte com o projeto e, mais uma vez (que não são vezes a mais), se tiveres algum problema, por favor, manda mensagem a `MaxxVilp#5243` no discord. 
+
+Goo hacking!
