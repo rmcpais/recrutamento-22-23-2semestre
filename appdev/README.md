@@ -45,7 +45,7 @@ Claro que será mais interessante poderes fazer mais funcionalidades do que esta
 Os três pontos serão considerado como os mínimos.
 
 ### Entrega
-A entrega em si tem que conter duas materiais:
+A entrega em si tem que conter dois materiais:
 1. O código em si, como em qualquer outro projeto de programação feito anteriormente no recrutamento.
 2. Dentro da pasta do vosso projeto, tem de estar uma pasta adicional a dizer `final`. 
 Dentro desta pasta, queria ver a versão final da aplicação, aquela que resulta do `flutter build <plataforma> --release` (caso tenhas feito uma aplicação web, terias de escrever `flutter build web --release`; caso fosse android, `flutter build apk --release` e por aí fora). 
