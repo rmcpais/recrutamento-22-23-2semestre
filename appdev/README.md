@@ -51,7 +51,7 @@ A entrega em si tem que conter duas materiais:
 Dentro desta pasta, queria ver a versão final da aplicação, aquela que resulta do `flutter build <plataforma> --release` (caso tenhas feito uma aplicação web, terias de escrever `flutter build web --release`; caso fosse android, `flutter build apk --release` e por aí fora). 
 Assim, é possível testar o teu código sem necessitar de compilar o teu projeto localmente. **Atenção:** o resultado do `flutter build` vai dar à pasta `build`, por isso, move os ficheiros que queres entregar dessa pasta para a `final` por favor!
 
-> Atenção numa particularidade relativamente à entrega, é melhor criares a pasta com os teus `PrimeiroÚltimo` nomes e depois lã dentro fazes `flutter create <nome do projeto>`. 
+> Atenção numa particularidade relativamente à entrega, é melhor criares a pasta com os teus `PrimeiroÚltimo` nomes e depois lá dentro fazes `flutter create <nome do projeto>`. 
 > Não faças `flutter create .`, dado que a pasta não tem a convenção indicada pela equipa de desenvolvimento do Flutter e, também, teria mais piada se deres nome próprio à tua app, não é verdade?
 
 ### Palavras finais
