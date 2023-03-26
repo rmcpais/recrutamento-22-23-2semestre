@@ -71,7 +71,20 @@ Em segundo lugar, tens a seguinte lista links que penso que possam ajudar caso q
 Recomendo vivamente mesmo!
 - [Flutter favorite packages](https://pub.dev/packages?q=is%3Aflutter-favorite) - packages recomendados.
 
+### Extensões que recomendo
+Para VSCode, eu uso as seguintes extensões:
+- As extensões próprias para [Dart](https://marketplace.visualstudio.com/items?itemName=Dart-Code.dart-code) e [Flutter](https://marketplace.visualstudio.com/items?itemName=Dart-Code.flutter)
+- [Awesome Flutter Snippets](https://marketplace.visualstudio.com/items?itemName=Nash.awesome-flutter-snippets): Ajuda nas sugestões e no refactor
+- [Flutter Widget Snippets](https://marketplace.visualstudio.com/items?itemName=alexisvt.flutter-snippets): Ajuda nas sugestões e no refactor
+- [CSS Flutter Colors](https://marketplace.visualstudio.com/items?itemName=circlecodesolution.ccs-flutter-color): Ajuda a ver e modificar as cores no Flutter
+- Caso não tenhas, procura por Rainbow Brackets (no VSCode já é um built-in, não sei para as outras plataformas)
+- (Opcional) [Live Share](https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare) Para partilhar e ser mais fácil de ver o código entre computadores
+
+Para outras plataformas, recomendo ires ver se consegues extensões que te ajudem nas sugestões e nas cores, visto que isso é o que vais mexer mais no projeto, em principio!
+
+---
+
 De resto é isto! 
 Boa sorte com o projeto e, mais uma vez (que não são vezes a mais), se tiveres algum problema, por favor, manda mensagem a `MaxxVilp#5243` no discord. 
 
-Goo hacking!
+Good hacking!
