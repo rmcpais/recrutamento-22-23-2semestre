@@ -11,6 +11,12 @@ A minha tag de discord é `MaxxVilp#5243`, tentarei ser breve a responder.
 > Quero reforçar o ponto de comunicação, qualquer coisa, não hesites em mandar mensagem! 
 > Desde que seja atempadamente e não em cima da entrega. Não prometo milagres nem ajudar a escrever código.
 
+### Workshop
+Os slides do workshop pode ser visto [aqui](https://docs.google.com/presentation/d/1VM8eMKqtHkzsTgK0mAQn3q6KIl_WglAG_23pYutiTN8/edit?usp=sharing).
+
+A parte prática é feita a partir do clone [deste](https://github.com/filipe-varela/hs_appdev_template) repositório, a fim de facilitar o começo de cada participante durante a sessão.
+O exemplo criado nesta parte será disponibilizado no `auxiliar_examples/`, como *Workshop 3*, depois do workshop se efetuar.
+
 ### Projeto de AppDev
 #### Tema
 O projeto em si é simples: fazer uma app que tenha uma funcionalidade. 
