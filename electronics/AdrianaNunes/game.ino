@@ -143,7 +143,6 @@ void pressButton() {
   unsigned long interrupt_time = millis();
 
   if (interrupt_time - last_interrupt_time > 200) {
-    //Serial.println("CLICK");
     if (running) {
       if (currentColor == rightColor) {
         // acertou
