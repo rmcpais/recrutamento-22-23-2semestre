@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>YouTube</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>      
+      p{
+        font-family: Roboto, Arial;
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+
+      body{
+        margin: 0;
+        padding-top: 80px;
+        padding-left: 96px;
+        padding-right: 24px;
+        background-color: rgb(248,248,248);
+      }
+
+      .header{
+        height: 55px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        position: fixed;
+        top: 0;
+        left: 0;    
+        right: 0;  
+        z-index: 100;
+        background-color: white;
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+        border-bottom-color: rgb(228, 228, 228);
+
+      }
+
+      .left-section{
+        display: flex;
+        align-items: center;
+      }
+      
+      .menu{
+        height: 24px;
+        margin-left: 24px;
+        margin-right: 24px;
+        cursor: pointer;
+      }
+
+      .youtube-logo{
+        height: 20px;
+        cursor: pointer;
+      }
+
+      .middle-section{
+        flex: 1;
+        margin-left: 70px;
+        margin-right: 35px;
+        max-width: 500px;
+        display: flex;
+        align-items: center;
+
+      }
+
+      .search-bar{
+        flex: 1;
+        height: 36px;
+        padding-left: 12px;
+        font-size: 16px;
+        border-width: 1px;
+        border-style: solid;
+        border-color: rgb(192, 192, 192);
+        border-radius: 2px;
+        box-shadow: inset 1px 2px 2px rgba(0,0,0, 0.05);
+        width: 0;
+      }
+
+      .search-bar::placeholder{
+        font-family: Roboto, Arial;
+        font-size: 16px;
+      }
+
+      .search-button{
+        height: 40px;
+        width: 64px;
+        background-color: rgb(240, 240, 240);
+        border-width: 1px;
+        border-style: solid;
+        border-color: rgb(192, 192, 192);
+        margin-left: -1px;
+        margin-right: 10px;
+        cursor:pointer;
+      }
+
+      .search-button, .voice-search-button, .upload-icon-container, .apps-icon-container, .notifications-icon-container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        cursor: pointer;
+      }
+
+      .search-button .tooltip, .voice-search-button .tooltip, .upload-icon-container .tooltip, .apps-icon-container .tooltip, .notifications-icon-container .tooltip{
+        font-family: Roboto, Arial;
+        position: absolute;
+        background-color: gray;
+        color: white;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        padding-left: 8px;
+        padding-right: 8px;
+        border-radius: 2px;
+        font-size: 12px;
+        bottom: -30px;
+        opacity: 0;
+        transition: opacity 0.5s;
+        pointer-events: none;
+        white-space: nowrap;
+      }
+
+      .search-button:hover .tooltip, .voice-search-button:hover .tooltip, .upload-icon-container:hover .tooltip, .apps-icon-container:hover .tooltip, .notifications-icon-container:hover .tooltip{
+        opacity: 1;
+      }
+
+      .search-icon{
+        height: 25px;
+      }
+
+      .voice-search-button{
+        height: 40px;
+        width: 40px;
+        border-radius: 20px;
+        border: none;
+        background-color: rgb(245, 245, 245);
+      }
+
+      .voice-search-icon{
+        height: 24px;
+      }
+
+      .right-section{
+        width: 180px;
+        margin-right: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-shrink: 0;
+      }
+
+      .upload-icon{
+        height: 24px;
+      }
+
+      .apps-icon{
+        height: 24px;
+      }
+
+      .notifications-icon{
+        height: 24px;
+      }
+
+      .notifications{
+        position: relative;
+      }
+
+      .notifications-count{
+        position: absolute;
+        top: -2px;
+        right: -5px;
+        background-color: rgb(200, 8, 0);
+        color: white;
+        font-family: Roboto, Arial;
+        font-size: 11px;
+        padding-left: 5px;
+        padding-right: 5px;
+        padding-top: 2px;
+        padding-bottom: 2px;
+        border-radius: 10px;
+      }
+      .user-icon{
+        height: 32px;
+        border-radius: 16px;
+      }
+
+      .sidebar{
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        top: 55px;
+        background-color: white;
+        width: 72px;
+        z-index: 200;
+        padding-top: 5px;
+      }
+
+      .sidebar-box{
+        height: 74px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        cursor: pointer;
+      }
+
+      .sidebar-box:hover{
+        background-color: rgb(235,235,235);
+      }
+
+      .sidebar-box img{
+        height: 24px;
+        margin-bottom: 4px;
+      }
+
+      .sidebar-box div{
+        font-family: Roboto, Arial;
+        font-size: 10px;
+      }
+
+      .thumbnail{
+        width: 100%;
+        cursor: pointer;
+        border-radius: 10px;
+      }
+
+      .video-title{
+        margin-top: 0;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 20px;
+        margin-bottom: 10px;
+        cursor: pointer;
+      }
+
+      .video-info-grid{
+        display: grid;
+        grid-template-columns: 50px 1fr;
+      }
+
+      .profile-picture{
+        width: 36px;
+        border-radius: 50px;
+        cursor: pointer;
+      }
+
+      .thumbnail-row{
+        margin-bottom: 8px;
+        position: relative;
+      }
+
+      .video-author, .video-stats{
+        font-size: 12px;
+        color: rgb(96, 96, 96);
+        cursor: pointer;
+      }
+
+      .video-author{
+        margin-bottom: 4px;
+      }
+
+      .video-grid{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        column-gap: 16px;
+        row-gap: 40px;
+      }
+
+      .video-time{
+        font-family: Roboto, Arial;
+        font-size: 12px;
+        font-weight: 500;
+        padding-left: 4px;
+        padding-right: 4px;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        border-radius: 5px;
+        background-color:black;
+        color: white;
+        opacity: 0.9;
+        position: absolute;
+        bottom: 8px;
+        right: 5px;
+      }
+
+      </style>
+  </head>
+  <body>
+    <div class="header">
+      <div class="left-section">
+        <img class="menu" src="icon1.svg">
+        <img class="youtube-logo" src="icon2.svg">
+      </div>
+      <div class="middle-section">
+        <input class="search-bar" type="type" placeholder="Search">
+        <button class="search-button">
+          <img class="search-icon" src="icon3.svg">
+          <div class="tooltip">Search</div>
+        </button>
+        <button class="voice-search-button">
+          <img class="voice-search-icon" src="icon4.svg">
+          <div class="tooltip">Search with your voice</div>
+        </button>
+      </div>
+      <div class="right-section">
+        <div class="upload-icon-container">
+          <img class="upload-icon" src="icon5.svg">
+          <div class="tooltip">Create</div>
+        </div>
+        <div class="apps-icon-container">
+          <img class="apps-icon" src="icon6.svg">
+          <div class="tooltip">YouTube Apps</div>
+        </div>
+        <div class="notifications-icon-container">
+          <img class="notifications-icon" src="icon7.svg">
+          <div class="notifications-count">3</div>
+          <div class="tooltip">Notifications</div>
+        </div>
+        <img class="user-icon" src="icon8.jpg">
+
+      </div>
+    </div>
+
+    <div class="sidebar">
+      <div class="sidebar-box">
+        <img src="s1.svg">
+        <div>Home</div>
+      </div>
+      <div class="sidebar-box">
+        <img src="s2.svg">
+        <div>Explore</div>
+      </div>
+      <div class="sidebar-box">
+        <img src="s3.svg">
+        <div>Subscriptions</div>
+      </div>
+      <div class="sidebar-box">
+        <img src="s4.svg">
+        <div>Originals</div>
+      </div>
+      <div class="sidebar-box">
+        <img src="s5.svg">
+        <div>YouTube Music</div>
+      </div>
+      <div class="sidebar-box">
+        <img src="s6.svg">
+        <div>Library</div>
+      </div>
+    </div>
+    
+
+    <div class="video-grid">
+      <div class="video-preview">
+        <div class="thumbnail-row">
+          <img class="thumbnail" src="nicki.webp">
+          <div class="video-time">2:45</div>
+        </div>
+        <div class="video-info-grid">
+          <div class="channel-picture">
+            <img class = "profile-picture"src="channel_nicki.jpg">
+          </div>
+          <div class="video-info">
+            <p class="video-title">
+              Nicki Minaj - Starships ("Pachelbel - Canon in D" Version)
+            </p>
+            <p class="video-author">
+              Nicki France
+            </p>
+            <p class="video-stats">
+              9.7M views &#183 9 years ago
+            </p>
+          </div>
+        </div>
+      </div>
+  
+      <div class="video-preview">
+        <div class="thumbnail-row ">
+          <img class="thumbnail" src="baby.webp">
+          <div class="video-time">3:40</div>
+        </div>
+        <div class="video-info-grid">
+          <div class="channel-picture">
+            <img class = "profile-picture"src="channel_baby.jpg">
+          </div>
+          <div class="video-info">
+            <p class="video-title">
+              Justin Bieber - Baby ft. Ludacris
+            </p>
+            <p class="video-author">
+              Justin Bieber
+            </p>
+            <p class="video-stats">
+              2.9B views &#183 13 years ago
+            </p>
+          </div>
+        </div>
+      </div>
+  
+      <div class="video-preview">
+        <div class="thumbnail-row ">
+          <img class="thumbnail" src="Quim.webp">
+          <div class="video-time">14:20</div>
+        </div>
+        <div class="video-info-grid">
+          <div class="channel-picture">
+            <img class = "profile-picture"src="channel_quim.jpg">
+          </div>
+          <div class="video-info">
+            <p class="video-title">
+              Quim Barreiros - Os bichos da fazenda (Official Video)
+            </p>
+            <p class="video-author">
+              Espacial Música
+            </p>
+            <p class="video-stats">
+              9.9M views &#183 12 years ago
+            </p>
+          </div>
+        </div>
+      </div>
+  
+      <div class="video-preview">
+        <div class="thumbnail-row ">
+          <img class="thumbnail" src="jcb.webp">
+          <div class="video-time">0:35</div>
+        </div>
+        <div class="video-info-grid">
+          <div class="channel-picture">
+            <img class = "profile-picture"src="channel_jcb.jpg">
+          </div>
+          <div class="video-info">
+            <p class="video-title">
+              "EPÁ, Leave me Alone!!!" - José Castelo-Branco
+            </p>
+            <p class="video-author">
+              Joca Palma
+            </p>
+            <p class="video-stats">
+              2.1M views &#183 11 years ago
+            </p>
+          </div>
+        </div>
+      </div>
+  
+  
+      <div class="video-preview">
+        <div class="thumbnail-row ">
+          <img class="thumbnail" src="barbie.webp">
+          <div class="video-time">1:25:08</div>
+        </div>
+        <div class="video-info-grid">
+          <div class="channel-picture">
+            <img class = "profile-picture"src="channel_barbie.jpg">
+          </div>
+          <div class="video-info">
+            <p class="video-title">
+              Barbie em A Princesa e a Plebéia (2004) | Filme Completo (Dublado)
+            </p>
+            <p class="video-author">
+              Barbie Magic BR
+            </p>
+            <p class="video-stats">
+              115K views &#183 2 weeks ago
+            </p>
+          </div>
+        </div>
+      </div>
+  
+      <div class="video-preview">
+        <div class="thumbnail-row ">
+          <img class="thumbnail" src="kuduro.webp">
+          <div class="video-time">3:56</div>
+        </div>
+        <div class="video-info-grid">
+          <div class="channel-picture">
+            <img class = "profile-picture"src="channel_kuduro.jpg">
+          </div>
+          <div class="video-info">
+            <p class="video-title">
+              Don Omar ft.Lucenzo - Danza Kuduro (Official Video)
+            </p>
+            <p class="video-author">
+              hej
+            </p>
+            <p class="video-stats">
+              2.5M views &#183 11 years ago
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="video-preview">
+        <div class="thumbnail-row ">
+          <img class="thumbnail" src="bible.webp">
+          <div class="video-time">3:35:01</div>
+        </div>
+        <div class="video-info-grid">
+          <div class="channel-picture">
+            <img class = "profile-picture"src="channel_bible.jpg">
+          </div>
+          <div class="video-info">
+            <p class="video-title">
+              The Holy Bible - Book 01 - Genesis - KJV Dramatized Audio
+            </p>
+            <p class="video-author">
+              tmantz625
+            </p>
+            <p class="video-stats">
+              17M views &#183 10 years ago
+            </p>
+          </div>
+        </div>
+      </div>
+  
+      <div class="video-preview">
+        <div class="thumbnail-row ">
+          <img class="thumbnail" src="ussr.webp">
+          <div class="video-time">3:25</div>
+        </div>
+        <div class="video-info-grid">
+          <div class="channel-picture">
+            <img class = "profile-picture"src="channel_ussr.jpg">
+          </div>
+          <div class="video-info">
+            <p class="video-title">
+              Hino Nacional da União Soviética [Tradução/Legenda]
+            </p>
+            <p class="video-author">
+              Bitch Edições
+            </p>
+            <p class="video-stats">
+              180K views &#183 2 years ago
+            </p>
+          </div>
+        </div>
+      </div>
+  
+  
+      <div class="video-preview">
+        <div class="thumbnail-row ">
+          <img class="thumbnail" src="taylor.webp">
+          <div class="video-time">14:56</div>
+        </div>
+        <div class="video-info-grid">
+          <div class="channel-picture">
+            <img class = "profile-picture"src="channel_taylor.jpg">
+          </div>
+          <div class="video-info">
+            <p class="video-title">
+              Taylor Swift - All Too Well: The Short Film
+            </p>
+            <p class="video-author">
+              Taylor Swift
+            </p>
+            <p class="video-stats">
+              84M views &#183 1 year ago
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="video-preview">
+        <div class="thumbnail-row ">
+          <img class="thumbnail" src="lazytown.webp">
+          <div class="video-time">0:45</div>
+        </div>
+        <div class="video-info-grid">
+          <div class="channel-picture">
+            <img class = "profile-picture"src="channel_lazytown.jpg">
+          </div>
+          <div class="video-info">
+            <p class="video-title">
+              Lazy Town | Welcome to Lazy Town
+            </p>
+            <p class="video-author">
+              LazyTown
+            </p>
+            <p class="video-stats">
+              2M views &#183 11 years ago
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="video-preview">
+        <div class="thumbnail-row ">
+          <img class="thumbnail" src="dorime.webp">
+          <div class="video-time">1:00:30</div>
+        </div>
+        <div class="video-info-grid">
+          <div class="channel-picture">
+            <img class = "profile-picture"src="channel_dorime.jpg">
+          </div>
+          <div class="video-info">
+            <p class="video-title">
+              DORIME AMENO MEME - BREGA FUNK 1 HORA (LEGENDADO)
+            </p>
+            <p class="video-author">
+              KiraTetshuii
+            </p>
+            <p class="video-stats">
+              714K views &#183 3 years ago
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="video-preview">
+        <div class="thumbnail-row ">
+          <img class="thumbnail" src="ronaldo.webp">
+          <div class="video-time">1:05</div>
+        </div>
+        <div class="video-info-grid">
+          <div class="channel-picture">
+            <img class = "profile-picture"src="channel_ronaldo.jpg">
+          </div>
+          <div class="video-info">
+            <p class="video-title">
+              Cristiano Ronaldo : Amor Mio Full Song
+            </p>
+            <p class="video-author">
+              megasoccerfan09
+            </p>
+            <p class="video-stats">
+              1.3M views &#183 13 years ago
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    </body>
+</html>
