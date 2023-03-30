@@ -28,6 +28,7 @@ nav {
 
 .header-img {
   display: flex;
+  height: 30px;
   width: auto;
 }
 
