@@ -12,9 +12,22 @@ a {
 
 a:hover {
     text-decoration: underline;
+    cursor: pointer;
 }
 
-a:visited {
-    color: blue;
+nav {
+    display: flex;
+    justify-content: flex-end;
 }
 
+.header-nav {
+    display: flex; /*creates flexbox*/
+    align-items: center;
+    margin-right: 17px;
+}
+
+.header-img:hover {
+    box-shadow: 0 0 10px gainsboro;
+    border-radius: 15px;
+    cursor: pointer;
+}
