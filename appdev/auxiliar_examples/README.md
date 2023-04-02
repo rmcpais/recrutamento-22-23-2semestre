@@ -19,6 +19,7 @@ Em termos de conteúdo, poderia ter conteúdo mais importante, mas neste caso de
 Esta combina um pouco da **Infinite List** com a implementação do widget `Image.network`, a fim de mostrar as imagens, bem como usar o `InkWell` para adicionar a propriedade de *click* na imagem, quando se quer adicioná-la. 
 Este exemplo é bastante simples no papel, mas pode ser desafiante a quem ainda não perceber os exemplos anteriores;
 - **Workshop 2**: A app que se usou como exemplo para o workshop.
+- **Workshop 3**: A app que se usou como exemplo prático para o workshop.
 
 Por enquanto são estes o exemplos adicionados, sendo que será avisado quando forem adicionados mais exemplos.
 
